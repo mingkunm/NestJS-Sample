@@ -1,6 +1,15 @@
-import { Controller, Get, HttpCode, Post } from '@nestjs/common';
+import { Controller, Get, Header, HttpCode, Post } from '@nestjs/common';
 @Controller('cats')
 export class CatsController {
+  @Post()
+  /*
+    Headers
+
+    https://docs.nestjs.com/controllers#headers
+
+    To specify a custom response header, you can either use a @Header() decorator or a library-specific response object (and call res.header() directly).
+  **/
+  @Header('Cache-Control', 'none')
   /*
     Status code
 
@@ -9,7 +18,6 @@ export class CatsController {
     As mentioned, the response status code is always 200 by default, except for POST requests which are 201. 
     We can easily change this behavior by adding the @HttpCode(...) decorator at a handler level.
   **/
-  @Post()
   @HttpCode(204)
   create(): string {
     return 'This action adds a new cat';
