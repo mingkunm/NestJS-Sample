@@ -1,4 +1,6 @@
-import { Controller, Get, Header, HttpCode, Post } from '@nestjs/common';
+import { Controller, Get, Header, HttpCode, Post, Req } from '@nestjs/common';
+import { Request } from 'express';
+
 @Controller('cats')
 export class CatsController {
   @Post()
@@ -35,5 +37,19 @@ export class CatsController {
   @Get('ab*cd')
   findAll(): string {
     return 'This action returns all cats';
+  }
+
+  /*
+    Request object
+
+    https://docs.nestjs.com/controllers#request-object
+  **/
+  @Get()
+  simpleGet(@Req() request: Request): string {
+    const { params, body, query, headers, ip } = request;
+
+    console.log({ params }, { body }, { query }, { headers }, { ip });
+
+    return 'This action return a simple cat';
   }
 }
